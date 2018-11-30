@@ -6,7 +6,26 @@ This library aims to be a dead simple data structures library that helps you bui
 
 ## User Guide
 
+Copy the includes directory to a folder findable by your compiler. Then simply link statically with
+
+```
+gcc <...> libds.a
+```
+
+If you want a version that is thread safe, use the pthread version
+
+```
+gcc <...> libds-pthread.a
+```
+
 ## Developer Guide
+
+Building the project is as simple as.
+
+```
+cmake -H. -Bbuild 
+cmake --build build -- -j3
+```
 
 ## Testing Guide
 
@@ -16,4 +35,4 @@ You will need libcheck, on ubuntu you should be able to get this with
 sudo apt install check
 ```
 
-Then you need to go into the test folder and run make
+Then you need to go into the test folder and run the cmake command once again
