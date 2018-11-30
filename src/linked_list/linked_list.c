@@ -17,13 +17,15 @@ struct linked_list {
 
 typedef struct linked_list linked_list;
 
-void linked_list_init(linked_list *ptr) {
+linked_list *linked_list_create() {
+  linked_list *ptr = malloc(sizeof(*ptr));
   ptr->head = NULL;
   ptr->length = 0;
   if (pthread_linked()) {
     ptr->mutex = malloc(sizeof(*ptr->mutex));
     pthread_mutex_init(ptr->mutex, NULL);
   }
+  return ptr;
 }
 
 void linked_list_destroy(linked_list *ptr) {
