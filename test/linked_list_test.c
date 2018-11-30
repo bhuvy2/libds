@@ -1,5 +1,6 @@
 #include "linked_list.h"
 #include <check.h>
+#include <stdio.h>
 
 START_TEST (simple_test) {
   linked_list *test = linked_list_create();

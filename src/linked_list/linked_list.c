@@ -75,7 +75,7 @@ void *linked_list_dequeue(linked_list *ll) {
 #endif
 
   linked_list_node *node = ll->head;
-  ll->head = ll->head->nexttarget_compile_definitions;
+  ll->head = ll->head->next;
   ll->length--;
 
 #ifdef LIBDS_PTHREAD_ENABLED
