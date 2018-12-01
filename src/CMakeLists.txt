@@ -2,6 +2,7 @@ set(SRC_FILES
   common.c
   hash_table/hash_table.c
   linked_list/linked_list.c
+  vector.c
 )
 
 function(configure_lib config_name)
@@ -11,6 +12,10 @@ function(configure_lib config_name)
 
   target_include_directories("${config_name}" PRIVATE ../includes/private)
   target_include_directories("${config_name}" PUBLIC ../includes/public)
+  INSTALL(TARGETS "${config_name}"
+        ARCHIVE DESTINATION "libs"
+        PUBLIC_HEADER DESTINATION ../includes/public/
+  )
 endfunction()
 
 configure_lib(ds)
