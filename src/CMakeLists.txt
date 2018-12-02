@@ -1,7 +1,10 @@
 set(SRC_FILES
   common.c
-  hash_table/hash_table.c
-  linked_list/linked_list.c
+  hash_table.c
+  hash_funcs.c
+  linked_list.c
+  avl_tree.c
+  stack.c
   vector.c
 )
 

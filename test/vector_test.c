@@ -4,8 +4,11 @@
 START_TEST (simple_test) {
   vector *vec = vector_create();
   ssize_t test_int = 20;
-  vector_set(vec, 0, (void*)test_int);
-  ssize_t ret = (ssize_t)vector_get(vec, 0);
+  int success = vector_set(vec, 0, (void*)test_int);
+  ck_assert_int_eq(success, 0);
+  ssize_t ret;
+  success = (ssize_t)vector_get(vec, 0, (void **)&ret);
+  ck_assert_int_eq(success, 0);
   ck_assert_int_eq(test_int, ret);
 }
 END_TEST

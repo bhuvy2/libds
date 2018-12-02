@@ -16,7 +16,7 @@ struct linked_list {
   linked_list_node *head;
   ssize_t length;
 #ifdef LIBDS_PTHREAD_ENABLED
-  pthread_mutex_t *mutex;
+  pthread_mutex_t mutex;
 #endif
 };
 
@@ -28,8 +28,7 @@ linked_list *linked_list_create() {
   ptr->length = 0;
 
 #ifdef LIBDS_PTHREAD_ENABLED
-  ptr->mutex = malloc(sizeof(*ptr->mutex));
-  pthread_mutex_init(ptr->mutex, NULL);
+  pthread_mutex_init(&ptr->mutex, NULL);
 #endif
 
   return ptr;
@@ -43,8 +42,7 @@ void linked_list_destroy(linked_list *ptr) {
     cur = next;
   }
 #ifdef LIBDS_PTHREAD_ENABLED
-  pthread_mutex_destroy(ptr->mutex);
-  free(ptr->mutex);
+  pthread_mutex_destroy(&ptr->mutex);
 #endif
 }
 
@@ -52,17 +50,13 @@ void linked_list_append(linked_list *ll, void *data) {
   linked_list_node *node = malloc(sizeof(*node));
   node->payload = data;
 
-#ifdef LIBDS_PTHREAD_ENABLED
-  pthread_mutex_lock(ll->mutex);
-#endif
+  lock_if_enabled(&ll->mutex);
 
   node->next = ll->head;
   ll->head = node;
   ll->length++;
 
-#ifdef LIBDS_PTHREAD_ENABLED
-    pthread_mutex_unlock(ll->mutex);
-#endif
+  unlock_if_enabled(&ll->mutex);
 }
 
 void *linked_list_dequeue(linked_list *ll) {
@@ -70,17 +64,13 @@ void *linked_list_dequeue(linked_list *ll) {
     return NULL;
   }
 
-#ifdef LIBDS_PTHREAD_ENABLED
-    pthread_mutex_lock(ll->mutex);
-#endif
+  lock_if_enabled(&ll->mutex);
 
   linked_list_node *node = ll->head;
   ll->head = ll->head->next;
   ll->length--;
 
-#ifdef LIBDS_PTHREAD_ENABLED
-    pthread_mutex_unlock(ll->mutex);
-#endif
+  unlock_if_enabled(&ll->mutex);
 
   void *ret = node->payload;
   free(node);
