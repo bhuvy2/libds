@@ -1,9 +1,10 @@
 set(SRC_FILES
-  common.c
-  hash_table.c
-  hash_funcs.c
-  linked_list.c
   avl_tree.c
+  common.c
+  hash_funcs.c
+  hash_table.c
+  linked_list.c
+  ring_buffer.c
   stack.c
   vector.c
 )

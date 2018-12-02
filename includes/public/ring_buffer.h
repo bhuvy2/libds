@@ -7,6 +7,12 @@ typedef struct ring_buffer ring_buffer;
 
 ring_buffer *ring_buffer_create(ssize_t num_elems);
 
-int ring_buffer_add(void *elem);
+#ifndef LIBDS_PTHREAD_ENABLED
+ssize_t ring_buffer_size(ring_buffer *q);
+#endif
 
-int ring_buffer_pop(void **ret);
+void ring_buffer_destroy(ring_buffer *rb);
+
+int ring_buffer_add(ring_buffer *rb, void *elem);
+
+int ring_buffer_pop(ring_buffer *rb, void **ret);
