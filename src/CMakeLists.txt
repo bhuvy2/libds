@@ -6,6 +6,7 @@ set(SRC_FILES
   linked_list.c
   ring_buffer.c
   stack.c
+  queue.c
   vector.c
 )
 

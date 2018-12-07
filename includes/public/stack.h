@@ -10,7 +10,7 @@ stack *new_stack();
 void stack_destroy(stack *st);
 
 // If you think you need this functionality in your multithreaded
-// Program, you shoule drethink your design
+// Program, you should rethink your design
 
 #ifndef LIBDS_PTHREAD_ENABLED
 int stack_empty(stack *st);

@@ -77,6 +77,7 @@ int vector_set(vector *this, ssize_t index, void *str) {
   }
   this->array[index] = str;
   unlock_if_enabled(&this->mtx);
+  return 0;
 }
 
 int vector_get(vector *this, ssize_t index, void **ret) {
@@ -88,6 +89,7 @@ int vector_get(vector *this, ssize_t index, void **ret) {
   void *elem = this->array[index];
   unlock_if_enabled(&this->mtx);
   *ret = elem;
+  return 0;
 }
 
 int vector_insert(vector *this, ssize_t index, void *str) {

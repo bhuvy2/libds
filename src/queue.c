@@ -1,6 +1,7 @@
 #include "queue.h"
 #include "ring_buffer.h"
 #include "stack.h"
+#include "common.h"
 
 #ifdef LIBDS_PTHREAD_ENABLED
 #include <pthread.h>
@@ -26,7 +27,7 @@ queue *queue_create() {
 #endif
 }
 
-void queue_destroy() {
+void queue_destroy(queue *ret) {
   stack_destroy(ret->reader_buffer);
   free(ret->reader_buffer);
   stack_destroy(ret->writer_buffer);
@@ -42,34 +43,34 @@ ssize_t queue_size(queue *q) {
 }
 #endif
 
-static queue_switch(queue *q) {
+static void queue_switch(queue *q) {
   lock_if_enabled(&q->mtx);
   while (1) {
     void *ret;
-    int ret = stack_pop(ret->writer_buffer, &ret);
-    if (ret != 0) {
+    int val = stack_pop(q->writer_buffer, &ret);
+    if (val != 0) {
       break;
     }
-    stack_push(ret->reader_buffer, ret);
+    stack_push(q->reader_buffer, ret);
   }
   unlock_if_enabled(&q->mtx);
 }
 
 int queue_pop(queue *q, void **ret) {
   void *elem;
-  int e = stack_pop(ret->reader_buffer, &elem);
+  int e = stack_pop(q->reader_buffer, &elem);
   if (e != 0) {
     queue_switch(q);
-    e = stack_pop(ret->reader_buffer, &elem);
+    e = stack_pop(q->reader_buffer, &elem);
   }
 
   if (e == 0 && ret) {
     *ret = elem;
   }
 
-  return ret;
+  return e;
 }
 
 int queue_push(queue *q, void *elem) {
-  return vector_append(q->writer_buffer, elem);
+  return stack_push(q->writer_buffer, elem);
 }
