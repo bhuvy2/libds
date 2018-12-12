@@ -36,7 +36,7 @@ START_TEST(test_vector_resize_larger_no_capacity){
     ck_assert(vector_size(vec) == 3);
     int append_ret = vector_get(vec, 2, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Stuff") == 0);
+    ck_assert_str_eq(get_ret, "Stuff");
 
     vector_destroy(vec);
     free(vec);
@@ -48,13 +48,13 @@ START_TEST(test_vector_resize_larger_capacity){
     int append_ret;
     vector *vec = vector_create();
 
-    vector_set(vec, 0, strdup("Stuff"));
     vector_resize(vec, 20);
+    vector_set(vec, 0, strdup("Stuff"));
 
     ck_assert(vector_size(vec) == 20);
     append_ret = vector_get(vec, 0, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Stuff") == 0);
+    ck_assert_str_eq(get_ret, "Stuff");
     vector_destroy(vec);
     free(vec);
 }
@@ -82,7 +82,7 @@ START_TEST(test_vector_resize_smaller_container){
     vector_set(vec, 0, strdup("stuff"));
     vector_resize(vec, 5);
 
-    ck_assert(vector_size(vec) == 10);
+    ck_assert(vector_size(vec) == 5);
 
     vector_destroy(vec);
     free(vec);
@@ -95,21 +95,20 @@ START_TEST(test_vector_set){
     vector *vec = vector_create();
 
     append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Connical");
+    ck_assert_int_ne(append_ret, 0);
     append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Ubuntu");
+    ck_assert_int_ne(append_ret, 0);
 
-    vector_set(vec, 0, "Implode");
+    vector_append(vec, "Implode");
+    vector_append(vec, "Ubuntu");
 
     ck_assert(vector_size(vec) == 2);
     append_ret = vector_get(vec, 0, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Implode") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "Implode");
+    append_ret = vector_get(vec, 1, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Ubuntu") == 0);
+    ck_assert_str_eq(get_ret, "Ubuntu");
 
     vector_destroy(vec);
     free(vec);
@@ -123,46 +122,22 @@ START_TEST(test_vector_get){
     vector *vec = vector_create();
 
     append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Connical") ==0);
+    ck_assert_int_ne(append_ret, 0);
 
     append_ret = vector_get(vec, 1, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Ubuntu") ==0);
+    ck_assert_int_ne(append_ret, 0);
 
     vector_destroy(vec);
     free(vec);
 }
 END_TEST
 
-START_TEST( test_vector_insert_inside){
+START_TEST(test_vector_insert_inside){
     void *get_ret;
     int append_ret;
     vector *vec = vector_create();
 
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Connical");
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Ubuntu");
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Ubuntu");
-
-    vector_insert(vec, 0, "Elementary");
-
-    ck_assert(vector_size(vec) == 3);
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Elementary") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Connical") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Ubuntu") == 0);
-
+    //TODO: Write a better test
 
     vector_destroy(vec);
     free(vec);
@@ -173,30 +148,7 @@ START_TEST( test_vector_insert_outside){
     void *get_ret;
     int append_ret;
     vector *vec = vector_create();
-
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Connical");
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Ubuntu");
-
-    vector_insert(vec, 3, "Elementary");
-
-    ck_assert(vector_size(vec) == 4);
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Elementary") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Connical") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Ubuntu") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(get_ret == NULL);
-
+    //TODO: Write a better test
     vector_destroy(vec);
     free(vec);
 }
@@ -208,25 +160,21 @@ START_TEST(test_vector_delete){
     int append_ret;
     vector *vec = vector_create();
 
+    vector_append(vec, "Ubuntu");
     append_ret = vector_get(vec, 0, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Connical");
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Ubuntu");
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    get_ret = strdup("Elementary");
+    ck_assert_str_eq(get_ret, "Ubuntu");
 
+    vector_append(vec, "Elementary");
+    append_ret = vector_get(vec, 1, &get_ret);
+    ck_assert_int_eq(append_ret, 0);
+    ck_assert_str_eq(get_ret, "Elementary");
     vector_delete(vec, 0, NULL);
 
-    ck_assert(vector_size(vec) == 2);
+    ck_assert(vector_size(vec) == 1);
     append_ret = vector_get(vec, 0, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Ubuntu")==0);
-    append_ret = vector_get(vec, 0, &get_ret);
-    ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Elementary") == 0);
+    ck_assert_str_eq(get_ret, "Elementary");
 
     vector_destroy(vec);
     free(vec);
@@ -251,70 +199,69 @@ START_TEST(test_vector_append){
 
     append_ret = vector_get(vec, 0, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Do you hear the people") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "Do you hear the people");
+    append_ret = vector_get(vec, 1, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Sing, singing the song of angry") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "Sing, singing the song of angry");
+    append_ret = vector_get(vec, 2, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(strcmp(get_ret, "Men, it is the music of a people who") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+        ck_assert_str_eq(get_ret, "Men, it is the music of a people who");
+    append_ret = vector_get(vec, 3, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(strcmp(get_ret, "Will not be slaves again") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "Will not be slaves again");
+    append_ret = vector_get(vec, 4, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(get_ret == NULL);
-    append_ret = vector_get(vec, 0, &get_ret);
+    append_ret = vector_get(vec, 5, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Hello") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "Hello");
+    append_ret = vector_get(vec, 6, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "a") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "a");
+    append_ret = vector_get(vec, 7, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "b") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "b");
+    append_ret = vector_get(vec, 8, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "c") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "c");
+    append_ret = vector_get(vec, 9, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "d") == 0);
+    ck_assert_str_eq(get_ret, "d");
 
     vector_append(vec, "e");
 
     append_ret = vector_get(vec, 0, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Do you hear the people") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "Do you hear the people");
+    append_ret = vector_get(vec, 1, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Sing, singing the song of angry") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "Sing, singing the song of angry");
+    append_ret = vector_get(vec, 2, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "Men, it is the music of a people who") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+        ck_assert_str_eq(get_ret, "Men, it is the music of a people who");
+    append_ret = vector_get(vec, 3, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(strcmp(get_ret, "Will not be slaves again") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "Will not be slaves again");
+    append_ret = vector_get(vec, 4, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(get_ret == NULL);
-    append_ret = vector_get(vec, 0, &get_ret);
+    append_ret = vector_get(vec, 5, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(strcmp(get_ret, "Hello") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "Hello");
+    append_ret = vector_get(vec, 6, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(strcmp(get_ret, "a") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "a");
+    append_ret = vector_get(vec, 7, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(strcmp(get_ret, "b") == 0 );
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "b");
+    append_ret = vector_get(vec, 8, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(strcmp(get_ret, "c") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "c");
+    append_ret = vector_get(vec, 9, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(strcmp(get_ret, "d") == 0);
-    append_ret = vector_get(vec, 0, &get_ret);
+    ck_assert_str_eq(get_ret, "d");
+
+    append_ret = vector_get(vec, 10, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-        ck_assert(strcmp(get_ret, "e") == 0);
+    ck_assert_str_eq(get_ret, "e");
     vector_destroy(vec);
     free(vec);
 }
@@ -326,21 +273,18 @@ START_TEST(test_vector_append_100){
     vector *vec = vector_create();
 
     size_t i = 0;
-    char buff[30];
     for(; i < 100; ++i){
-        sprintf(buff, "%lu", i);
-        vector_append(vec, buff);
+      vector_append(vec,(void *)i);
     }
+    ck_assert(vector_size(vec) == 100);
+
     int conglomeration = 1;
     for(i = 0; i < 100; ++i){
-        sprintf(buff, "%lu", i);
         void* str;
         int append = vector_get(vec, i, &str);
         ck_assert_int_eq(append, 0);
-        conglomeration &= strcmp(buff, str) == 0;
+        ck_assert_int_eq((ssize_t)str, i);
     }
-    ck_assert(vector_size(vec) == 100);
-    ck_assert(conglomeration);
 
     vector_destroy(vec);
     free(vec);
@@ -352,22 +296,19 @@ START_TEST(test_vector_append_1mil){
     int append_ret;
     vector *vec = vector_create();
 
+    const ssize_t iters = 100000;
     size_t i = 0;
-    char buff[30];
-    for(; i < 1000000; ++i){
-        sprintf(buff, "%lu", i);
-        vector_append(vec, buff);
+    for(; i < iters; ++i){
+      //printf("%lu\n", i);
+      vector_append(vec, (void*)i);
     }
-    int conglomeration = 1;
-    for(i = 0; i < 1000000; ++i){
-        sprintf(buff, "%lu", i);
+    for(i = 0; i < iters; ++i){
         void* str;
         int append = vector_get(vec, i, &str);
         ck_assert_int_eq(append, 0);
-        conglomeration &= strcmp(buff, str) == 0;
+        ck_assert_int_eq(i, (ssize_t)str);
     }
-    ck_assert(vector_size(vec) == 1000000);
-    ck_assert(conglomeration);
+    ck_assert(vector_size(vec) == iters);
 
     vector_destroy(vec);
     free(vec);
@@ -384,7 +325,7 @@ START_TEST(test_vector_append_empty){
     ck_assert(vector_size(vec) == 1);
     append_ret = vector_get(vec, 0, &get_ret);
     ck_assert_int_eq(append_ret, 0);
-    ck_assert(strcmp(get_ret, "") == 0);
+    ck_assert_str_eq(get_ret, "");
 
     vector_destroy(vec);
     free(vec);
@@ -394,24 +335,25 @@ END_TEST
 typedef struct {
   const char *desc;
   void *test;
+  int timeout;
 } test_desc;
 
 static test_desc tests[] = {
-(test_desc){"test_vector_create", test_vector_create,},
-(test_desc){"test_vector_resize_larger_no_capacity", test_vector_resize_larger_no_capacity,},
-(test_desc){"test_vector_resize_larger_capacity", test_vector_resize_larger_capacity,},
-(test_desc){"test_vector_resize_smaller", test_vector_resize_smaller,},
-(test_desc){"test_vector_resize_smaller_container", test_vector_resize_smaller_container,},
-(test_desc){"test_vector_set", test_vector_set,},
-(test_desc){"test_vector_get", test_vector_get,},
-(test_desc){"test_vector_insert_inside", test_vector_insert_inside,},
-(test_desc){"test_vector_insert_outside", test_vector_insert_outside,},
-(test_desc){"test_vector_delete", test_vector_delete,},
-(test_desc){"test_vector_append", test_vector_append,},
-(test_desc){"test_vector_append_100", test_vector_append_100,},
-(test_desc){"test_vector_append_1mil", test_vector_append_1mil,},
-(test_desc){"test_vector_append_empty", test_vector_append_empty,},
-(test_desc){"test_simple", test_simple,},
+(test_desc){"test_vector_create", test_vector_create,0,},
+(test_desc){"test_vector_resize_larger_no_capacity", test_vector_resize_larger_no_capacity,0,},
+(test_desc){"test_vector_resize_larger_capacity", test_vector_resize_larger_capacity,0,},
+(test_desc){"test_vector_resize_smaller", test_vector_resize_smaller,0,},
+(test_desc){"test_vector_resize_smaller_container", test_vector_resize_smaller_container,0,},
+(test_desc){"test_vector_set", test_vector_set,0,},
+(test_desc){"test_vector_get", test_vector_get,0,},
+(test_desc){"test_vector_insert_inside", test_vector_insert_inside,0,},
+(test_desc){"test_vector_insert_outside", test_vector_insert_outside,0,},
+(test_desc){"test_vector_delete", test_vector_delete,0,},
+(test_desc){"test_vector_append", test_vector_append,0,},
+(test_desc){"test_vector_append_100", test_vector_append_100,0,},
+(test_desc){"test_vector_append_1mil", test_vector_append_1mil,30,},
+(test_desc){"test_vector_append_empty", test_vector_append_empty,0,},
+(test_desc){"test_simple", test_simple,0,},
 };
 
 START_SUITE(vector_suite) {
@@ -422,6 +364,9 @@ START_SUITE(vector_suite) {
     test_desc *test = tests + i;
     TCase *tc_core = tcase_create(test->desc);
     tcase_add_test(tc_core, test->test);
+    if (test->timeout != 0) {
+      tcase_set_timeout(tc_core, (double)test->timeout);
+    }
     suite_add_tcase(s, tc_core);
   }
 

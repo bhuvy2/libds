@@ -45,7 +45,7 @@ ssize_t vector_size(vector *this) {
 
 static void vector_expand_capacity(vector *this, ssize_t new_capacity){
   lock_if_enabled(&this->mtx);
-  this->array = realloc(this->array, new_capacity);
+  this->array = realloc(this->array, new_capacity*sizeof(*this->array));
   this->capacity = new_capacity;
   unlock_if_enabled(&this->mtx);
 }
