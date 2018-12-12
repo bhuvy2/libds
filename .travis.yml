@@ -1,6 +1,6 @@
 language: c
 install:
-  - sudo apt install -y lcov cmake
+  - sudo apt install -y lcov
   - gem install coveralls-lcov
 before_script:
   - export BUILD_DIR=`mktemp -d`
