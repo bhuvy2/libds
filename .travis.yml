@@ -1,0 +1,15 @@
+language: c
+install:
+  - sudo apt install -y lcov cmake
+  - gem install coveralls-lcov
+before_script:
+  - export BUILD_DIR=`mktemp -d`
+  - cmake -H. -B${BUILD_DIR}
+  - cd $BUILD_DIR
+script:
+  - make
+  - make test
+after_success:
+  - make unit_test_cov
+  - lcov --compat-libtool --directory . --capture --output-file unit_test_cov.info
+  - coveralls-lcov unit_test_cov.info
