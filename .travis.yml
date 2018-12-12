@@ -5,11 +5,10 @@ addons:
     packages:
       - lcov
       - check
-      - gcc-6
 install:
   - gem install coveralls-lcov
 before_script:
-  - export BUILD_DIR=`mktemp -d`
+  - export BUILD_DIR=build
   - cmake -H. -B${BUILD_DIR}
   - cd $BUILD_DIR
 script:
