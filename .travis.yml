@@ -2,8 +2,9 @@ dist: trusty
 language: c
 addons:
   apt:
-    - lcov
-    - check
+    packages:
+      - lcov
+      - check
 install:
   - gem install coveralls-lcov
 before_script:
