@@ -3,6 +3,7 @@ include(GNUInstallDirs)
 set(LIBRARY_OUTPUT_PATH "libs")
 set(EXECUTABLE_OUTPUT_PATH "bin")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+set (CMAKE_C_STANDARD 11)
 # Project's name
 add_subdirectory(src)
 enable_testing()
