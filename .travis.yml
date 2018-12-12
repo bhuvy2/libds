@@ -1,6 +1,6 @@
 language: c
 install:
-  - sudo apt install -y lcov
+  - sudo apt install -y lcov check
   - gem install coveralls-lcov
 before_script:
   - export BUILD_DIR=`mktemp -d`
