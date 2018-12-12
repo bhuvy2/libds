@@ -21,6 +21,6 @@ after_success:
   - pushd $COVER_DIR
   - make unit_test_cov -j4
   - lcov --compat-libtool --directory . --capture --output-file unit_test_cov.info
-  - lcov --remove test/* unit_test_cov.info --output-file unit_test_cov.info
+  - lcov --remove unit_test_cov.info "*/test/*" --output-file unit_test_cov.info
   - coveralls-lcov unit_test_cov.info
   - popd
