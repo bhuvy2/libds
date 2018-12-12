@@ -17,6 +17,7 @@ function(configure_lib config_name)
 
   target_include_directories("${config_name}" PRIVATE ../includes/private)
   target_include_directories("${config_name}" PUBLIC ../includes/public)
+
   INSTALL(TARGETS "${config_name}"
         ARCHIVE DESTINATION "libs"
         PUBLIC_HEADER DESTINATION ../includes/public/

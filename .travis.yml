@@ -12,14 +12,15 @@ before_script:
   - cmake -H. -B${BUILD_DIR}
 script:
   - pushd $BUILD_DIR
-  - make
-  - make test
+  - make -j4
+  - make test -j4
   - popd
 after_success:
   - export COVER_DIR=cover
   - cmake -H. -B${COVER_DIR} -DCODE_COVERAGE=ON
   - pushd $COVER_DIR
-  - make unit_test_cov
+  - make unit_test_cov -j4
   - lcov --compat-libtool --directory . --capture --output-file unit_test_cov.info
+  - lcov --remove test/* unit_test_cov.info --output-file unit_test_cov.info
   - coveralls-lcov unit_test_cov.info
   - popd

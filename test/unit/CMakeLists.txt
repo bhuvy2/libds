@@ -14,7 +14,6 @@ add_test(NAME unit
   COMMAND unit_test_libds)
 
 IF(CODE_COVERAGE)
-  set(COVERAGE_LCOV_EXCLUDES 'test/*')
 SETUP_TARGET_FOR_COVERAGE_LCOV(NAME unit_test_cov
   EXECUTABLE unit_test_libds
   DEPENDENCIES unit_test_libds ds)
