@@ -5,6 +5,7 @@ addons:
     packages:
       - lcov
       - check
+      - gcc-6
 install:
   - gem install coveralls-lcov
 before_script:
