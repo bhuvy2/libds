@@ -73,3 +73,109 @@ ssize_t pm_hash(const void *data, ssize_t size, pm_hash_ctx *pm) {
   ctx.off = 0;
   return upm_hash(data, size, &ctx);
 }
+
+// http://www.partow.net/programming/hashfunctions/#RSHashFunction
+
+ssize_t rs_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+  ssize_t b    = 378551;
+  ssize_t a    = 63689;
+  ssize_t hash = 0;
+  for(ssize_t i = 0; i < size; i++) {
+    hash = hash * a + str[i];
+    a = a * b;
+  }
+
+  return hash;
+}
+
+ssize_t js_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+  ssize_t hash = 1315423911;
+  for(ssize_t i = 0; i < size; i++) {
+    hash ^= ((hash << 5) + str[i] + (hash >> 2));
+  }
+  return hash;
+}
+
+ssize_t elf_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+   ssize_t hash = 0;
+   ssize_t x    = 0;
+
+   for(ssize_t i = 0; i < size; i++) {
+      hash = (hash << 4) + str[i];
+      if((x = hash & 0xF0000000L) != 0) {
+         hash ^= (x >> 24);
+      }
+      hash &= ~x;
+   }
+
+   return hash;
+}
+
+ssize_t bkdr_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+   const ssize_t salt = 131; // 31 131 1313 13131 131313 etc..
+   ssize_t hash = 0;
+   for(ssize_t i = 0; i < size; i++) {
+     hash *= salt;
+     hash += str[i];
+   }
+   return hash;
+}
+
+ssize_t sdbm_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+   ssize_t hash = 0;
+   for(ssize_t i = 0; i < size; i++) {
+     hash -= str[i] + (hash << 6) + (hash << 16);
+   }
+   return hash;
+}
+
+ssize_t djb_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+   ssize_t hash = 5381;
+   for(ssize_t i = 0; i < size; i++) {
+      hash += (hash << 5) + str[i];
+   }
+   return hash;
+}
+
+ssize_t dek_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+   ssize_t hash = size;
+   for(ssize_t i = 0; i < size; i++) {
+      hash = ((hash << 5) ^ (hash >> 27)) ^ str[i];
+   }
+   return hash;
+}
+
+
+ssize_t bp_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+   ssize_t hash = 0;
+   for(ssize_t i = 0; i < size; i++){
+     hash = (hash << 7) ^ str[i];
+   }
+   return hash;
+}
+
+
+ssize_t fnv_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+   const ssize_t fnv_prime = 0x811C9DC5;
+   ssize_t hash = 0;
+   for(ssize_t i = 0; i < size; i++) {
+      hash *= fnv_prime;
+      hash ^= str[i];
+   }
+   return hash;
+}
+
+
+ssize_t ap_hash(const char *str, ssize_t size, __attribute__((unused)) void *meta) {
+   ssize_t hash = 0xAAAAAAAA;
+   for(ssize_t i = 0; i < size; i++) {
+     ssize_t xor;
+     if (i & 1 == 0) {
+       xor = (hash << 7) & str[i] * (hash >> 3);
+     } else {
+       xor = ~((hash << 11) + (str[i] ^ (hash >> 5)));
+     }
+     hash ^= xor;
+   }
+   return hash;
+}
