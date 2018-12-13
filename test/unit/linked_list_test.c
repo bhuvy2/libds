@@ -4,9 +4,12 @@
 START_TEST (simple_test) {
   linked_list *test = linked_list_create();
   int test_int = 1;
-  linked_list_append(test, (void *) test_int);
-  int ret = (int)linked_list_dequeue(test);
-  ck_assert_int_eq(test_int, ret);
+  int check = linked_list_append(test, (void *) test_int);
+  ck_assert_int_eq(check, 0);
+  void *ret;
+  check = linked_list_dequeue(test, &ret);
+  ck_assert_int_eq(check, 0);
+  ck_assert_int_eq(test_int, (ssize_t)ret);
 }
 END_TEST
 

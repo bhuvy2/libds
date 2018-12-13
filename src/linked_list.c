@@ -46,8 +46,12 @@ void linked_list_destroy(linked_list *ptr) {
 #endif
 }
 
-void linked_list_append(linked_list *ll, void *data) {
+int linked_list_append(linked_list *ll, void *data) {
   linked_list_node *node = malloc(sizeof(*node));
+  if (NULL == node) {
+    return -1;
+  }
+
   node->payload = data;
 
   lock_if_enabled(&ll->mutex);
@@ -57,11 +61,12 @@ void linked_list_append(linked_list *ll, void *data) {
   ll->length++;
 
   unlock_if_enabled(&ll->mutex);
+  return 0;
 }
 
-void *linked_list_dequeue(linked_list *ll) {
+int linked_list_dequeue(linked_list *ll, void **ret) {
   if (!ll->head) {
-    return NULL;
+    return -1;
   }
 
   lock_if_enabled(&ll->mutex);
@@ -72,8 +77,9 @@ void *linked_list_dequeue(linked_list *ll) {
 
   unlock_if_enabled(&ll->mutex);
 
-  void *ret = node->payload;
+  void *pay = node->payload;
   free(node);
 
-  return ret;
+  *ret = pay;
+  return 0;
 }
