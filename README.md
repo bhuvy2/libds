@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.com/bhuvy2/libds.svg?branch=master)](https://travis-ci.com/bhuvy2/libds)
 [![Coverage Status](https://coveralls.io/repos/github/bhuvy2/libds/badge.svg)](https://coveralls.io/github/bhuvy2/libds)
 ![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)
+[![Documentation Status](https://readthedocs.org/projects/libds/badge/?version=latest)](https://libds.readthedocs.io/en/latest/?badge=latest)
+
 
 _The Datastructures Library C was missing_ - Bhuvy
 
