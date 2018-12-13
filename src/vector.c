@@ -30,12 +30,83 @@ vector *vector_create() {
   return ret;
 }
 
+vector *vector_create_with_size(ssize_t size) {
+  //TODO: Implement
+  return NULL;
+}
+
+vector *vector_shallow_copy(vector *this) {
+  //TODO: Implement
+  return NULL;
+}
+
+vector *vector_concatenate(vector *this, vector *next) {
+  //TODO: Implement
+  return NULL;
+}
+
+int vector_equals(vector *this, vector *next) {
+  //TODO: Implement
+  return 0;
+}
+
+vector *vector_slice(vector *this, ssize_t lhs, ssize_t rhs) {
+  //TODO: Implement
+  return NULL;
+}
+
+void vector_clear(vector *this) {
+  //TODO: Implement
+  return NULL;
+}
+
 void vector_destroy(vector *this) {
   free(this->array);
 #ifdef LIBDS_PTHREAD_ENABLED
   pthread_mutex_destroy(&this->mtx);
 #endif
 }
+
+vector *vector_combinations(vector *vec) {
+  //TODO: Implement
+  return NULL;
+}
+
+vector *vector_compact(vector *vec) {
+  //TODO: Implement
+  return NULL;
+}
+
+vector *vector_drop(vector *vec, ssize_t n) {
+  //TODO: Implement
+  return NULL;
+}
+
+int vector_fill(vector *vec, void *elem, ssize_t lhs, ssize_t rhs) {
+  //TODO: Implement
+  return 0;
+}
+
+int vector_filter(vector *vec, int (*decider)(void *)) {
+  //TODO: Implement
+  return 0;
+}
+
+int vector_map(vector *vec, void *(*decider)(void *)) {
+  //TODO: Implement
+  return 0;
+}
+
+int vector_reverse(vector *vec, void **ret) {
+  //TODO: Implement
+  return 0;
+}
+
+int vector_shuffle(vector *vec) {
+  //TODO: Implement
+  return 0;
+}
+
 
 #ifndef LIBDS_PTHREAD_ENABLED
 ssize_t vector_size(vector *this) {
