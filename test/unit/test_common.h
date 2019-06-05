@@ -28,3 +28,9 @@ typedef struct {
 		Suite *suite_name(void); \
     volatile const UnitTest PASTE(__ ## suite_name ## _test_m, __LINE__) __attribute__((section("tests_"))) __attribute__ ((used)) = ((UnitTest){.func = (test_func_type)suite_name});       \
     Suite *suite_name(void)
+
+typedef struct {
+  const char *desc;
+  void *test;
+  int timeout;
+} test_desc;

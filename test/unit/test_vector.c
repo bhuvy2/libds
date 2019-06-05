@@ -332,12 +332,6 @@ START_TEST(test_vector_append_empty){
 }
 END_TEST
 
-typedef struct {
-  const char *desc;
-  void *test;
-  int timeout;
-} test_desc;
-
 static test_desc tests[] = {
 (test_desc){"test_vector_create", test_vector_create,0,},
 (test_desc){"test_vector_resize_larger_no_capacity", test_vector_resize_larger_no_capacity,0,},

@@ -61,7 +61,7 @@ ssize_t upm_hash(const void *data, ssize_t size, upm_hash_ctx *upm_ctx) {
   if (rem != 0) {
     ssize_t last = 0;
     //TODO: Make this platform independent
-    memcpy(&rem, ((char *)ret) + size - rem, rem);
+    memcpy(&rem, ((char *)&ret) + size - rem, rem);
     ret += ((data_s[i / sizeof(ssize_t)] * mult + off) % prime) % hash_size;
   }
   return ret;

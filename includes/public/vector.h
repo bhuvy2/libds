@@ -11,13 +11,13 @@ vector *vector_create();
 
 vector *vector_create_with_size(ssize_t);
 
-vector *vector_shallow_copy(vector *);
+vector *vector_shallow_copy(const vector *);
 
-vector *vector_concatenate(vector *, vector*);
+vector *vector_concatenate(const vector *, const vector*);
 
 int vector_equals(vector *, vector *);
 
-vector *vector_slice(vector *, ssize_t lhs, ssize_t rhs);
+vector *vector_slice(const vector *, ssize_t lhs, ssize_t rhs);
 
 void vector_clear(vector *this);
 

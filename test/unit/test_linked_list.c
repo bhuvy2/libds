@@ -10,6 +10,16 @@ START_TEST (simple_test) {
   check = linked_list_dequeue(test, &ret);
   ck_assert_int_eq(check, 0);
   ck_assert_int_eq(test_int, (ssize_t)ret);
+  linked_list_destroy(test);
+}
+END_TEST
+
+START_TEST (dequeue_test) {
+  linked_list *test = linked_list_create();
+  void *ret;
+  int check = linked_list_dequeue(test, &ret);
+  ck_assert_int_ne(check, 0);
+  linked_list_destroy(test);
 }
 END_TEST
 

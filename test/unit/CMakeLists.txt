@@ -1,7 +1,8 @@
 add_executable(unit_test_libds
   test_main.c
-  linked_list_test.c
-  vector_test.c)
+  test_linked_list.c
+  test_ht.c
+  test_vector.c)
 
 set(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
 

@@ -31,33 +31,33 @@ vector *vector_create() {
 }
 
 vector *vector_create_with_size(ssize_t size) {
-  //TODO: Implement
-  return NULL;
+  vector *vec = vector_create();
+  vector_resize(vec, size);
+  return vec;
 }
 
-vector *vector_shallow_copy(vector *this) {
-  //TODO: Implement
-  return NULL;
+vector *vector_shallow_copy(const vector *this) {
+  return vector_slice(this, 0, this->size-1);
 }
 
-vector *vector_concatenate(vector *this, vector *next) {
-  //TODO: Implement
-  return NULL;
+vector *vector_concatenate(const vector *this, const vector *next) {
+  vector *ret = vector_create_with_size(this->size + next->size);
+  memcpy(ret->array, this->array, this->size);
+  memcpy(ret->array + this->size, next->array, next->size);
+  return ret;
 }
 
-int vector_equals(vector *this, vector *next) {
-  //TODO: Implement
-  return 0;
-}
-
-vector *vector_slice(vector *this, ssize_t lhs, ssize_t rhs) {
-  //TODO: Implement
-  return NULL;
+vector *vector_slice(const vector *this, ssize_t lhs, ssize_t rhs) {
+  vector *ret = vector_create_with_size(this->size);
+  ssize_t bytes = (rhs - lhs) * sizeof(*ret->array);
+  memcpy(ret->array, this->array + lhs, bytes);
+  return ret;
 }
 
 void vector_clear(vector *this) {
-  //TODO: Implement
-  return NULL;
+  this->array = realloc(this->array, INITIAL_CAPACITY*sizeof(*this->array));
+  this->size = 0;
+  return;
 }
 
 void vector_destroy(vector *this) {
@@ -65,16 +65,6 @@ void vector_destroy(vector *this) {
 #ifdef LIBDS_PTHREAD_ENABLED
   pthread_mutex_destroy(&this->mtx);
 #endif
-}
-
-vector *vector_combinations(vector *vec) {
-  //TODO: Implement
-  return NULL;
-}
-
-vector *vector_compact(vector *vec) {
-  //TODO: Implement
-  return NULL;
 }
 
 vector *vector_drop(vector *vec, ssize_t n) {
@@ -134,6 +124,7 @@ void vector_resize(vector *this, ssize_t new_size) {
     while (new_size < new_capacity*2) {
       new_capacity /= 2;
     }
+    new_capacity *= 2;
   }
   vector_expand_capacity(this, new_capacity);
   this->size = new_size;
